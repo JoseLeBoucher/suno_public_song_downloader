@@ -5,10 +5,10 @@ import streamlit as st
 
 def get_song_title(url):
     """
-    Récupère le titre de la chanson depuis la balise <title> dans la page HTML.
+    Retrieves the song title from the <title> tag in the HTML page.
 
-    :param url: URL de la page contenant la chanson
-    :return: Titre de la chanson ou "suno_song" si non trouvé
+    :param url: URL of the page containing the song
+    :return: Title of the song or "suno_song" if not found
     """
     try:
         response = requests.get(url)
@@ -17,22 +17,22 @@ def get_song_title(url):
             title_tag = soup.find('title')
             if title_tag:
                 title = title_tag.text.strip()
-                # Nettoyer le titre pour extraire uniquement le nom de la chanson
-                title = title.split(" by ")[0]  # Supprimer " by @username | Suno"
+                # Clean the title to extract only the song name
+                title = title.split(" by ")[0]  # Remove " by @username | Suno"
                 return title
         return "suno_song"
     except Exception as e:
-        st.error(f"Erreur lors de la récupération du titre : {e}")
+        st.error(f"Error while retrieving the title: {e}")
         return "suno_song"
 
 
 def download_audio_file(audio_url, output_path):
     """
-    Télécharge un fichier audio depuis une URL.
+    Downloads an audio file from a URL.
 
-    :param audio_url: Lien direct vers le fichier audio
-    :param output_path: Chemin et nom du fichier de sortie
-    :return: Le chemin du fichier téléchargé
+    :param audio_url: Direct link to the audio file
+    :param output_path: Path and name of the output file
+    :return: Path of the downloaded file
     """
     try:
         response = requests.get(audio_url, stream=True)
@@ -42,87 +42,87 @@ def download_audio_file(audio_url, output_path):
                     file.write(chunk)
             return output_path
         else:
-            st.error(f"Échec du téléchargement, code d'état : {response.status_code}")
+            st.error(f"Failed to download, status code: {response.status_code}")
             return None
     except Exception as e:
-        st.error(f"Erreur lors du téléchargement : {e}")
+        st.error(f"Error while downloading: {e}")
         return None
 
 
-# Application Streamlit
-st.set_page_config(page_title="Téléchargeur Suno", layout="centered")
+# Streamlit application
+st.set_page_config(page_title="Suno Downloader", layout="centered")
 
-# Titre principal
-st.title("Téléchargeur Suno")
-st.write("Une application simple pour télécharger des sons publics depuis Suno. "
-         "Cela vous permet d'obtenir les sons que vous aimez avec un titre personnalisé !")
+# Main title
+st.title("Suno Downloader")
+st.write("A simple application to download public sounds from Suno. "
+         "It allows you to get the sounds you like with a personalized title!")
 
-# Inputs utilisateur
-url = st.text_input("Entrez l'URL du son Suno :",
+# User inputs
+url = st.text_input("Enter the Suno sound URL:",
                     placeholder="https://suno.com/song/fc991b95-e4e9-4c8f-87e8-e5e4560755e7")
-custom_title = st.text_input("Entrez un titre personnalisé (facultatif) :", placeholder="Titre personnalisé")
+custom_title = st.text_input("Enter a custom title (optional):", placeholder="Custom title")
 
-# Bouton pour lancer le téléchargement du son en mémoire
-if st.button("Récupérer le son"):
+# Button to start downloading the sound in memory
+if st.button("Fetch the sound"):
     if url:
-        # Obtenir le titre de la chanson depuis l'URL
+        # Get the song title from the URL
         song_title = get_song_title(url)
 
-        # Utiliser un titre personnalisé si fourni
+        # Use a custom title if provided
         if custom_title.strip():
             song_title = custom_title.strip()
 
-        # Nettoyer le titre pour le nom de fichier
+        # Clean the title for the file name
         song_title = song_title.replace(" ", "_").replace("/", "_")
         audio_url = f"https://cdn1.suno.ai/{url.split('/')[-1]}.mp3"
 
-        # Télécharger le fichier
-        with st.spinner("Récupération en cours..."):
+        # Download the file
+        with st.spinner("Fetching in progress..."):
             downloaded_file = download_audio_file(audio_url, f"{song_title}.mp3")
 
-        # Vérifier si le fichier a été récupéré avec succès
+        # Check if the file was successfully fetched
         if downloaded_file:
-            st.success(f"Son récupéré avec succès : {downloaded_file}")
-            # Permettre à l'utilisateur de télécharger le fichier
+            st.success(f"Sound successfully fetched: {downloaded_file}")
+            # Allow the user to download the file
             with open(downloaded_file, "rb") as file:
                 st.download_button(
-                    label="Télécharger le son",
+                    label="Download the sound",
                     data=file,
                     file_name=f"{song_title}.mp3",
                     mime="audio/mpeg"
                 )
     else:
-        st.error("Veuillez entrer une URL valide.")
+        st.error("Please enter a valid URL.")
 
-# Charger l'image
-image_path = "images/tuto_lien.png"  # Remplacez par le chemin de votre image
+# Load the image
+image_path = "images/tuto_lien.png"  # Replace with the path to your image
 
-# Page principale
+# Main page
 st.markdown("""
-# **Comment récupérer l'URL du son depuis Suno**
+# **How to retrieve the URL of the sound from Suno**
 
-Pour télécharger un son public depuis **Suno** en utilisant cette application, voici comment récupérer l'URL du son :
+To download a public sound from **Suno** using this application, here’s how to retrieve the URL of the sound:
 
-### 1. **Accédez au lecteur audio**
-- Rendez-vous sur la page du son que vous souhaitez télécharger sur **Suno**.
-- Vous verrez un lecteur audio similaire à celui affiché ci-dessous :
+### 1. **Go to the audio player**
+- Go to the page of the sound you want to download on **Suno**.
+- You will see an audio player similar to the one shown below:
 """)
 
-# Afficher l'image
-st.image(image_path, caption="Exemple de lecteur Suno avec l'icône de partage entourée.", use_column_width=True)
+# Display the image
+st.image(image_path, caption="Example of the Suno player with the share icon highlighted.", use_column_width=True)
 
 st.markdown("""
-### 2. **Cliquez sur l'icône de partage**
-- Dans le lecteur, repérez l'icône **partage** entourée en rouge dans l'image ci-dessus.
-- Cliquez dessus pour copier le lien du son.
+### 2. **Click on the share icon**
+- In the player, find the **share** icon highlighted in red in the image above.
+- Click on it to copy the link to the sound.
 
-### 3. **Utilisez l'URL dans l'application**
-- Collez cette URL dans le champ prévu dans cette application, elle ressemblera à quelque chose comme :  
-  `https://suno.com/song/[code_unique_du_son]`.
-- Vous pourrez ensuite télécharger le fichier audio.
+### 3. **Use the URL in the application**
+- Paste this URL into the appropriate field in this application. It will look something like:  
+  `https://suno.com/song/[unique_song_code]`.
+- You can then download the audio file.
 
 ---
 
-### **Remarque importante :**
-Le lien généré par l'icône de partage garantit que l'application obtient le bon fichier audio. Assurez-vous de copier une URL valide pour éviter les erreurs.
+### **Important Note:**
+The link generated by the share icon ensures that the application retrieves the correct audio file. Make sure to copy a valid URL to avoid errors.
 """)
