@@ -82,8 +82,7 @@ if st.button("Télécharger"):
 
         # Vérifier si le fichier a été téléchargé avec succès
         if downloaded_file:
-            st.success(f"Fichier téléchargé avec succès : {downloaded_file}")
-            # Permettre à l'utilisateur de télécharger le fichier
+            # Proposer le fichier à l'utilisateur immédiatement
             with open(downloaded_file, "rb") as file:
                 st.download_button(
                     label="Télécharger le fichier",
