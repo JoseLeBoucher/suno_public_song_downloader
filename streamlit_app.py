@@ -50,7 +50,7 @@ def download_audio_file(audio_url, output_path):
 
 
 # Application Streamlit
-st.set_page_config(page_title="Suno vers MP3", layout="centered")
+st.set_page_config(page_title="Téléchargeur Suno", layout="centered")
 
 # Titre principal
 st.title("Téléchargeur Suno")
@@ -103,7 +103,7 @@ Pour télécharger un son public depuis **Suno** en utilisant cette application,
 - Rendez-vous sur la page du son que vous souhaitez télécharger sur **Suno**.
 - Vous verrez un lecteur audio similaire à celui affiché ci-dessous :
 
-![Exemple de lecteur Suno](tuto_lien.png)
+![Exemple de lecteur Suno](suno_public_song_downloader\tuto_lien.png)
 
 ### 2. **Cliquez sur l'icône de partage**
 - Dans le lecteur, repérez l'icône **partage** entourée en rouge dans l'image ci-dessus. Elle ressemble à une flèche pointant vers l'extérieur.
