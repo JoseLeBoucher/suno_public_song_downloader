@@ -76,20 +76,20 @@ if st.button("Télécharger"):
         song_title = song_title.replace(" ", "_").replace("/", "_")
         audio_url = f"https://cdn1.suno.ai/{url.split('/')[-1]}.mp3"
 
-        # Télécharger le fichier
+        # Télécharger le fichier audio
         with st.spinner("Téléchargement en cours..."):
-            downloaded_file = download_audio_file(audio_url, f"{song_title}.mp3")
+            audio_content = download_audio_file(audio_url)
 
         # Vérifier si le fichier a été téléchargé avec succès
-        if downloaded_file:
-            # Proposer le fichier à l'utilisateur immédiatement
-            with open(downloaded_file, "rb") as file:
-                st.download_button(
-                    label="Télécharger le fichier",
-                    data=file,
-                    file_name=f"{song_title}.mp3",
-                    mime="audio/mpeg"
-                )
+        if audio_content:
+            # Proposer le fichier directement pour téléchargement
+            st.success("Téléchargement prêt !")
+            st.download_button(
+                label="Télécharger immédiatement",
+                data=audio_content,
+                file_name=f"{song_title}.mp3",
+                mime="audio/mpeg"
+            )
     else:
         st.error("Veuillez entrer une URL valide.")
 
