@@ -52,6 +52,19 @@ def download_audio_file(audio_url, output_path):
 # Application Streamlit
 st.set_page_config(page_title="Suno vers MP3", layout="centered")
 
+
+
+# Titre principal
+st.title("Téléchargeur Suno")
+st.write("Une application simple pour télécharger des sons publics depuis Suno. "
+         "Cela vous permet d'obtenir les sons que vous aimez avec un titre personnalisé !")
+
+# Inputs utilisateur
+url = st.text_input("Entrez l'URL du son Suno :",
+                    placeholder="https://suno.com/song/fc991b95-e4e9-4c8f-87e8-e5e4560755e7")
+custom_title = st.text_input("Entrez un titre personnalisé (facultatif) :", placeholder="Titre personnalisé")
+
+
 st.markdown("""
 # **Comment récupérer l'URL du son depuis Suno**
 
@@ -82,16 +95,6 @@ Pour télécharger un son public depuis **Suno** en utilisant cette application,
 Le lien généré par l'icône de partage garantit que l'application obtient le bon fichier audio. Assurez-vous de copier une URL valide pour éviter les erreurs.
 """)
 
-
-# Titre principal
-st.title("Téléchargeur Suno")
-st.write("Une application simple pour télécharger des sons publics depuis Suno. "
-         "Cela vous permet d'obtenir les sons que vous aimez avec un titre personnalisé !")
-
-# Inputs utilisateur
-url = st.text_input("Entrez l'URL du son Suno :",
-                    placeholder="https://suno.com/song/fc991b95-e4e9-4c8f-87e8-e5e4560755e7")
-custom_title = st.text_input("Entrez un titre personnalisé (facultatif) :", placeholder="Titre personnalisé")
 
 # Bouton pour lancer le téléchargement
 if st.button("Télécharger"):
