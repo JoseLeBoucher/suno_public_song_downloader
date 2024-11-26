@@ -52,8 +52,6 @@ def download_audio_file(audio_url, output_path):
 # Application Streamlit
 st.set_page_config(page_title="Suno vers MP3", layout="centered")
 
-
-
 # Titre principal
 st.title("Téléchargeur Suno")
 st.write("Une application simple pour télécharger des sons publics depuis Suno. "
@@ -63,38 +61,6 @@ st.write("Une application simple pour télécharger des sons publics depuis Suno
 url = st.text_input("Entrez l'URL du son Suno :",
                     placeholder="https://suno.com/song/fc991b95-e4e9-4c8f-87e8-e5e4560755e7")
 custom_title = st.text_input("Entrez un titre personnalisé (facultatif) :", placeholder="Titre personnalisé")
-
-
-st.markdown("""
-# **Comment récupérer l'URL du son depuis Suno**
-
-Pour télécharger un son public depuis **Suno** en utilisant cette application, voici comment récupérer l'URL du son :
-
-### 1. **Accédez au lecteur audio**
-- Rendez-vous sur la page du son que vous souhaitez télécharger sur **Suno**.
-- Vous verrez un lecteur audio similaire à celui affiché ci-dessous :
-
-![Exemple de lecteur Suno](tuto_lien.png)
-
-### 2. **Cliquez sur l'icône de partage**
-- Dans le lecteur, repérez l'icône **partage** entourée en rouge dans l'image ci-dessus. Elle ressemble à une flèche pointant vers l'extérieur.
-- Cliquez dessus pour ouvrir les options de partage.
-
-### 3. **Copiez l'URL**
-- Une fois que vous avez cliqué sur l'icône, une URL unique sera générée pour ce son.
-- Copiez cette URL, elle ressemblera à quelque chose comme :  
-  `https://suno.com/song/[code_unique_du_son]`.
-
-### 4. **Utilisez l'URL dans l'application**
-- Collez cette URL dans le champ prévu dans cette application.
-- Vous pourrez ensuite télécharger le fichier audio.
-
----
-
-### **Remarque importante :**
-Le lien généré par l'icône de partage garantit que l'application obtient le bon fichier audio. Assurez-vous de copier une URL valide pour éviter les erreurs.
-""")
-
 
 # Bouton pour lancer le téléchargement
 if st.button("Télécharger"):
@@ -127,3 +93,33 @@ if st.button("Télécharger"):
                 )
     else:
         st.error("Veuillez entrer une URL valide.")
+
+st.markdown("""
+# **Comment récupérer l'URL du son depuis Suno**
+
+Pour télécharger un son public depuis **Suno** en utilisant cette application, voici comment récupérer l'URL du son :
+
+### 1. **Accédez au lecteur audio**
+- Rendez-vous sur la page du son que vous souhaitez télécharger sur **Suno**.
+- Vous verrez un lecteur audio similaire à celui affiché ci-dessous :
+
+![Exemple de lecteur Suno](tuto_lien.png)
+
+### 2. **Cliquez sur l'icône de partage**
+- Dans le lecteur, repérez l'icône **partage** entourée en rouge dans l'image ci-dessus. Elle ressemble à une flèche pointant vers l'extérieur.
+- Cliquez dessus pour ouvrir les options de partage.
+
+### 3. **Copiez l'URL**
+- Une fois que vous avez cliqué sur l'icône, une URL unique sera générée pour ce son.
+- Copiez cette URL, elle ressemblera à quelque chose comme :  
+  `https://suno.com/song/[code_unique_du_son]`.
+
+### 4. **Utilisez l'URL dans l'application**
+- Collez cette URL dans le champ prévu dans cette application.
+- Vous pourrez ensuite télécharger le fichier audio.
+
+---
+
+### **Remarque importante :**
+Le lien généré par l'icône de partage garantit que l'application obtient le bon fichier audio. Assurez-vous de copier une URL valide pour éviter les erreurs.
+""")
