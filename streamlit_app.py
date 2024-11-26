@@ -50,7 +50,7 @@ def download_audio_file(audio_url, output_path):
 
 
 # Application Streamlit
-st.set_page_config(page_title="Téléchargeur Suno", layout="centered")
+st.set_page_config(page_title="Suno vers MP3", layout="centered")
 
 st.markdown("""
 # **Comment récupérer l'URL du son depuis Suno**
