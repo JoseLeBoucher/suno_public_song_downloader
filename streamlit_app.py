@@ -62,8 +62,8 @@ url = st.text_input("Entrez l'URL du son Suno :",
                     placeholder="https://suno.com/song/fc991b95-e4e9-4c8f-87e8-e5e4560755e7")
 custom_title = st.text_input("Entrez un titre personnalisé (facultatif) :", placeholder="Titre personnalisé")
 
-# Bouton pour lancer le téléchargement
-if st.button("Télécharger"):
+# Bouton pour lancer le téléchargement du son en mémoire
+if st.button("Récupérer le son"):
     if url:
         # Obtenir le titre de la chanson depuis l'URL
         song_title = get_song_title(url)
@@ -76,20 +76,21 @@ if st.button("Télécharger"):
         song_title = song_title.replace(" ", "_").replace("/", "_")
         audio_url = f"https://cdn1.suno.ai/{url.split('/')[-1]}.mp3"
 
-        # Télécharger le fichier audio
-        with st.spinner("Téléchargement en cours..."):
-            audio_content = download_audio_file(audio_url)
+        # Télécharger le fichier
+        with st.spinner("Récupération en cours..."):
+            downloaded_file = download_audio_file(audio_url, f"{song_title}.mp3")
 
-        # Vérifier si le fichier a été téléchargé avec succès
-        if audio_content:
-            # Proposer le fichier directement pour téléchargement
-            st.success("Téléchargement prêt !")
-            st.download_button(
-                label="Télécharger immédiatement",
-                data=audio_content,
-                file_name=f"{song_title}.mp3",
-                mime="audio/mpeg"
-            )
+        # Vérifier si le fichier a été récupéré avec succès
+        if downloaded_file:
+            st.success(f"Son récupéré avec succès : {downloaded_file}")
+            # Permettre à l'utilisateur de télécharger le fichier
+            with open(downloaded_file, "rb") as file:
+                st.download_button(
+                    label="Télécharger le son",
+                    data=file,
+                    file_name=f"{song_title}.mp3",
+                    mime="audio/mpeg"
+                )
     else:
         st.error("Veuillez entrer une URL valide.")
 
