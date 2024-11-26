@@ -95,7 +95,7 @@ if st.button("Télécharger"):
         st.error("Veuillez entrer une URL valide.")
 
 # Charger l'image
-image_path = "tuto_lien.png"  # Remplacez par le chemin de votre image
+image_path = "images/tuto_lien.png"  # Remplacez par le chemin de votre image
 
 # Page principale
 st.markdown("""
